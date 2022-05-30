@@ -70,10 +70,22 @@ public class PhoneController extends HttpServlet {
 			
 			response.sendRedirect("/phonebook2/pbc?action=list");
 			
+		}else if("updateForm".equals(action)) {
+			RequestDispatcher rd = request.getRequestDispatcher("./updateForm.jsp");
+			rd.forward(request, response);
+			
 		}else if("update".equals(action)) {
 			int id = Integer.parseInt(request.getParameter("id"));
+			String name = request.getParameter("name");
+			String hp = request.getParameter("hp");
+			String company = request.getParameter("company");
 			
+			PersonVo personVo = new PersonVo(id, name, hp, company);
+			PhoneDao phoneDao = new PhoneDao();
 			
+			phoneDao.dbUpdate(personVo);
+			
+			response.sendRedirect("/phonebook2/pbc?action=list");
 			
 		}else {
 			System.out.println("파라미터 없음");
