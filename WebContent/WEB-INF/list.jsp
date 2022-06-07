@@ -1,15 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<%@ page import = "java.util.List" %>
-<%@ page import = "com.javaex.vo.PersonVo" %>
-<%@ page import = "com.javaex.dao.PhoneDao" %>
-
-
-<%
-	List<PersonVo> pList = (List<PersonVo>)request.getAttribute("personList");
-%>    
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,32 +16,32 @@
 
 <p>입력한 정보 내역입니다.</p>
 
-<%for (int i=0; i<pList.size(); i++){ %>
+<c:forEach items = "${pList}" var = "PersonVo">
 <table border = '1'>
 	<tr>
 		<td>이름(name)</td>
-		<td><%=pList.get(i).getName()%></td>
+		<td>${pList.name}</td>
 	</tr>
 	
 	<tr>
 		<td>핸드폰(hp)</td>
-		<td><%=pList.get(i).getHp()%></td>
+		<td>${pList.hp}</td>
 	</tr>
 	
 	<tr>
 		<td>회사(company)</td>
-		<td><%=pList.get(i).getCompany()%></td>
+		<td>${pList.company}</td>
 	</tr>
 	
 	<tr>
-		<td><a href ="./pbc?action=updateForm&id=<%=pList.get(i).getPersonId()%>">수정</a></td>
-		<td><a href ="./pbc?action=delete&id=<%=pList.get(i).getPersonId()%>">삭제</a></td>
+		<td><a href ="./pbc?action=updateForm&id=${param.personId}">수정</a></td>
+		<td><a href ="./pbc?action=delete&id=${param.personId}">삭제</a></td>
 	</tr>
 	
 </table>
 
 <br>
-<%} %>
+</c:forEach>
 
 
 <a href = "./pbc?action=writeForm">추가번호 등록</a>
